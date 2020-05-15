@@ -1,7 +1,7 @@
 import numpy as np
 from time import time
 
-from data_structures import SIZES, marriages_sorted, marriages_unsorted, multimaps
+from data_structures_lab2 import SIZES, marriages_sorted, marriages_unsorted, multimaps
 from search import linear_search, binary_search
 from sort import quick_sort
 import plot
@@ -52,12 +52,12 @@ for size in SIZES:
     # Находим среднее время поиска по ключу по 50000 попыткам
     for _ in range(50000):
         check = time()
-        map(lambda obj: obj.toStr(), multimaps[size][randomGroom])
+        [obj.to_str() for obj in multimaps[size][randomGroom]]
         key_time += time() - check
 
     key_time *= 20
     print('Поиск по ключу.\t\t\t\t\tВремя (нс):  %.2f' % (key_time * 1e3))
-    print('Результат:', *map(lambda obj: obj.to_str(), multimaps[size][randomGroom]))
+    print('Результат:', *[obj.to_str() for obj in multimaps[size][randomGroom]])
     timing['Поиск по ключу'].append(key_time)
 
 

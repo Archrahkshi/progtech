@@ -1,6 +1,6 @@
 from matplotlib import pyplot as plt
 
-from data_structures import SIZES
+from data_structures_lab2 import SIZES
 
 
 def sort(timing):

@@ -1,7 +1,7 @@
 from faker import Faker
 import numpy.random as npr
 
-from data_structures import SIZES
+from data_structures_lab2 import SIZES
 
 fake = Faker('ru_RU')
 Faker.seed(0)
