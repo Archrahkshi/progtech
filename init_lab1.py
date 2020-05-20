@@ -1,16 +1,17 @@
 from sys import setrecursionlimit
 from time import time, sleep
-from threading import Thread
+from threading import Thread, stack_size
 
 from generator import generate
 from data_structures_lab1 import SIZES, marriages
 from sort import selection_sort, shaker_sort, quick_sort
 import plot
 
-setrecursionlimit(5000)
+setrecursionlimit(10000)
+stack_size(200000000)
 
 
-# generate()
+generate()
 
 
 # Сортировка и вывод
@@ -30,7 +31,7 @@ for i, size in enumerate(SIZES):
         timing[algorithm].append(check)
         with open(f'databases/sorted/{algorithm}/{algorithm}{size}.txt', 'w') as file:
             # noinspection PyUnboundLocalVariable
-            file.writelines(' '.join(field) for field in [obj.__dict__.values() for obj in marriages_sorted])
+            file.writelines(map(' '.join, map(lambda obj: obj.__dict__.values(), marriages_sorted)))
         print('Размер: {:<6}\t\tСортировка: {:<9}\t\tВремя работы: {:<}'.format(size, algorithm, check))
 
 
