@@ -46,3 +46,21 @@ def search(timing: Dict, hash: bool = False) -> None:
         plt.savefig('lab3_search_timing.pdf')
     else:
         plt.savefig('lab2_search_timing.pdf')
+
+
+def collisions(collisions_count_bad_hash: Dict[int, int], collisions_count_good_hash: Dict[int, int]) -> None:
+    """
+    Построение графиков зависимости количества коллизий от объёма данных.
+    :param collisions_count_bad_hash: Количество коллизий для плохой хеш-функции.
+    :param collisions_count_good_hash: Количество коллизий для хорошей хеш-функции.
+    """
+    plt.figure(figsize=(16, 9))
+    plt.plot(SIZES, list(collisions_count_bad_hash.values()), label='Плохая хеш-функция')
+    plt.plot(SIZES, list(collisions_count_good_hash.values()), label='Хорошая хеш-функция')
+    plt.grid()
+    plt.legend(fontsize=16)
+    plt.xlabel('Объём входных данных')
+    plt.ylabel('Количество коллизий')
+    plt.xscale('log')
+    plt.yscale('log')
+    plt.savefig('lab3_collisions.pdf')

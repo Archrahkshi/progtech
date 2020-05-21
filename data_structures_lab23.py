@@ -98,16 +98,24 @@ multimaps = {}
 # Ключи - хеши объектов, значения - объекты типа Marriage.
 marriages_bad_hash, marriages_good_hash = {}, {}
 
+# Счётчики коллизий для хеш-таблиц
+collision_count_bad_hash, collision_count_good_hash = {}, {}
+
 for size in SIZES:
     # noinspection PyArgumentList,PyArgumentList
     multimaps[size] = defaultdict(list)
     # noinspection PyArgumentList,PyArgumentList
     marriages_bad_hash[size], marriages_good_hash[size] = defaultdict(list), defaultdict(list)
+    collision_count_bad_hash[size], collision_count_good_hash[size] = 0, 0
     for marriage in marriages_unsorted[size]:
         multimaps[size][marriage.groom_name].append(marriage)
 
         marriage.hash = hash.bad(marriage.groom_name)
+        if marriage.hash in marriages_bad_hash[size]:
+            collision_count_bad_hash[size] += 1
         marriages_bad_hash[size][marriage.hash].append(marriage)
 
         marriage.hash = hash.good(marriage.groom_name)
+        if marriage.hash in marriages_good_hash[size]:
+            collision_count_good_hash[size] += 1
         marriages_good_hash[size][marriage.hash].append(marriage)

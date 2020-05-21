@@ -2,7 +2,7 @@ import pickle
 import numpy as np
 from time import time
 
-from data_structures_lab23 import SIZES, marriages_unsorted
+from data_structures_lab23 import SIZES, marriages_unsorted, collision_count_bad_hash, collision_count_good_hash
 from search import hash_table_search
 import plot
 
@@ -29,7 +29,8 @@ for size in SIZES:
         hash_table_search(size, 'bad', random_groom)
         bad_hash_time += time() - check
     bad_hash_time *= 20
-    print('Поиск в плохой хеш-таблице.\t\t\t\t\tВремя (мкс):  %.2f' % bad_hash_time)
+    print('Поиск в плохой хеш-таблице.\t\t\tВремя (мкс):  %.2f\t\tКоллизий: %d (%d%%)'
+          % (bad_hash_time, collision_count_bad_hash[size], collision_count_bad_hash[size] // size))
     print('Результат:', *hash_table_search(size, 'bad', random_groom), sep='\n')
     timing['Плохая хеш-функция'].append(bad_hash_time)
 
@@ -38,8 +39,10 @@ for size in SIZES:
         hash_table_search(size, 'good', random_groom)
         good_hash_time += time() - check
     good_hash_time *= 20
-    print('Поиск в хорошей хеш-таблице.\t\t\t\tВремя (мкс):  %.2f' % good_hash_time)
+    print('Поиск в хорошей хеш-таблице.\t\tВремя (мкс):  %.2f\t\tКоллизий: %d (%d%%)'
+          % (good_hash_time, collision_count_good_hash[size], collision_count_good_hash[size] // size))
     print('Результат:', *hash_table_search(size, 'good', random_groom), sep='\n')
     timing['Хорошая хеш-функция'].append(good_hash_time)
 
 plot.search(timing, hash=True)
+plot.collisions(collision_count_bad_hash, collision_count_good_hash)

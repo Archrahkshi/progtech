@@ -19,6 +19,5 @@ def good(key: str) -> int:
     """
     hash = 0
     for i in key:
-        hash += ord(i)
-        hash -= (hash << 13) | (hash >> 19)
+        hash = (hash * 1664525) + ord(i) + 1013904223
     return hash
